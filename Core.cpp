@@ -35,6 +35,7 @@ std::vector<char> rdFile(const std::string& path)
 	std::vector<char> content{};
 	do content.push_back(0);
 	while (in.read(&content.back(), 1));
+	if (!content.empty()) content.pop_back();
 	return content;
 }
 

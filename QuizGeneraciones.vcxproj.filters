@@ -31,5 +31,11 @@
     <None Include="src\index.html">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="style.css">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="script.js">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

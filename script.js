@@ -1,0 +1,1 @@
+document.getElementsByClassName("instr")[0].textContent += Math.round(Math.random());
