@@ -31,10 +31,10 @@
     <None Include="src\index.html">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="style.css">
+    <None Include="src\script.js">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="script.js">
+    <None Include="src\style.css">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
