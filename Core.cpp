@@ -10,6 +10,8 @@
 
 #define EXIT { SDLNet_TCP_DelSocket(set, client); SDLNet_TCP_Close(client); std::cout << "Wrong request\n"; return; }
 
+std::vector<std::string> poems{};
+
 std::vector<std::string> split(std::string line, char delim, const std::vector<char>& exclude = {})
 {
 	std::vector<std::string> words(1);
@@ -79,18 +81,31 @@ void Core::loop()
 	for (std::string::const_reverse_iterator c{ statusLine[1].crbegin() }; c != statusLine[1].crend(); c++)
 		if (*c == '.') break;
 		else extension.push(*c);
-	std::string fileType{};
-	while (!extension.empty())
-		fileType.push_back(extension.top()), extension.pop();
+	std::string fileType{ "*/*" };
 
-	fileType = "*/*";
-
-	if (statusLine[0] == "GET")
+	if (statusLine[0] == "GET" || statusLine[0] == "POST")
 	{
 		std::vector<char> fileContent{ rdFile(statusLine[1]) };
 		std::string response{ "HTTP/2.0 200 Ok\nConnection: close\nContent-type: " + fileType + "\n\n" };
 		for (const char& c : fileContent) response.push_back(c);
 		SDLNet_TCP_Send(client, response.data(), static_cast<int>(response.size()));
+
+		if (statusLine[0] == "POST")
+		{
+			std::string poem{};
+			bool urlCode{};
+			urlCode;
+			for (size_t i{ 5 }; i != lines.back().length(); i++)
+				if (lines.back()[i] == '%')
+					urlCode = true;
+				else if (lines.back()[i] == '+')
+					poem.push_back(' ');
+				else if (urlCode)
+					poem.push_back(static_cast<char>(std::stoi(lines.back().substr(i, 1) + lines.back().substr(i + 1, 1), nullptr, 16))), (urlCode = false), (i++);
+				else
+					poem.push_back(lines.back()[i]);
+			poems.push_back(poem);
+		}
 	}
 
 	SDLNet_TCP_DelSocket(set, client);

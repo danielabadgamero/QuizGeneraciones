@@ -37,5 +37,11 @@
     <None Include="src\style.css">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="src\wait.html">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\admin.html">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

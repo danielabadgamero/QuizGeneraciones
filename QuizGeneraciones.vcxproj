@@ -139,9 +139,11 @@
     <ClInclude Include="Core.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="src\admin.html" />
     <None Include="src\index.html" />
     <None Include="src\script.js" />
     <None Include="src\style.css" />
+    <None Include="src\wait.html" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
