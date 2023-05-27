@@ -3,8 +3,15 @@
 <head>
     <meta charset="utf-8">
     <title>Admin</title>
+    <script>
+        function setReady() {
+            let req = new XMLHttpRequest();
+            req.open("POST", "/ready", true);
+            req.send();
+        }
+    </script>
 </head>
 <body>
-
+    <button onclick="setReady()">Set Ready</button>
 </body>
 </html>

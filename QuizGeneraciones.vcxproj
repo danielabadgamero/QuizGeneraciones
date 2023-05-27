@@ -141,7 +141,7 @@
   <ItemGroup>
     <None Include="src\admin.html" />
     <None Include="src\index.html" />
-    <None Include="src\script.js" />
+    <None Include="src\poem.html" />
     <None Include="src\style.css" />
     <None Include="src\wait.html" />
   </ItemGroup>

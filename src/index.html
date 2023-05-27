@@ -2,13 +2,16 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Generaciones del 98 y del 27</title>
+    <title>Generaciones del 98 y 27</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
 </head>
 <body>
     <header id="instr"></header>
+    <script>
+        let gen = (Math.random() < 0.5 ? 98 : 27);
+        document.getElementById("instr").innerHTML = gen;
+    </script>
     <form method="post" action="wait.html">
         <textarea name="poem" id="poem"></textarea>
         <button id="submit">Enviar</button>

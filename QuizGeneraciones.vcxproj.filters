@@ -31,9 +31,6 @@
     <None Include="src\index.html">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="src\script.js">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="src\style.css">
       <Filter>Resource Files</Filter>
     </None>
@@ -41,6 +38,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="src\admin.html">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\poem.html">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

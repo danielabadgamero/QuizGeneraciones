@@ -3,6 +3,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <algorithm>
 
 #include <SDL_net.h>
 
@@ -11,6 +12,7 @@
 #define EXIT { SDLNet_TCP_DelSocket(set, client); SDLNet_TCP_Close(client); std::cout << "Wrong request\n"; return; }
 
 std::vector<std::string> poems{};
+bool ready{};
 
 std::vector<std::string> split(std::string line, char delim, const std::vector<char>& exclude = {})
 {
@@ -85,12 +87,29 @@ void Core::loop()
 
 	if (statusLine[0] == "GET" || statusLine[0] == "POST")
 	{
-		std::vector<char> fileContent{ rdFile(statusLine[1]) };
-		std::string response{ "HTTP/2.0 200 Ok\nConnection: close\nContent-type: " + fileType + "\n\n" };
-		for (const char& c : fileContent) response.push_back(c);
-		SDLNet_TCP_Send(client, response.data(), static_cast<int>(response.size()));
-
-		if (statusLine[0] == "POST")
+		std::string response{};
+		if (statusLine[1] == "/ready")
+			if (statusLine[0] == "GET")
+				response = "HTTP/2.0 200 Ok\nConnection: close\n\n" + std::string(ready ? "true" : "false");
+			else
+				ready = true;
+		else if (statusLine[1] == "/poem")
+		{
+			if (!poems.empty())
+			{
+				response = "HTTP/2.0 200 Ok\nConnection: close\n\n" + poems.back();
+				poems.pop_back();
+			}
+			else
+				response = "HTTP/2.0 404 Not Found\nConnection: close\n\nNo quedan poemas!";
+		}
+		else if (statusLine[0] == "GET")
+		{
+			std::vector<char> fileContent{ rdFile(statusLine[1]) };
+			response = "HTTP/2.0 200 Ok\nConnection: close\nContent-type: " + fileType + "\n\n";
+			for (const char& c : fileContent) response.push_back(c);
+		}
+		else
 		{
 			std::string poem{};
 			bool urlCode{};
@@ -105,7 +124,12 @@ void Core::loop()
 				else
 					poem.push_back(lines.back()[i]);
 			poems.push_back(poem);
+			std::vector<char> fileContent{ rdFile(statusLine[1]) };
+			response = "HTTP/2.0 200 Ok\nConnection: close\nContent-type: " + fileType + "\n\n";
+			for (const char& c : fileContent) response.push_back(c);
 		}
+
+		SDLNet_TCP_Send(client, response.data(), static_cast<int>(response.size()));
 	}
 
 	SDLNet_TCP_DelSocket(set, client);

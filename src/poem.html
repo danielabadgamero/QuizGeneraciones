@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Generaciones del 98 y 27</title>
+	<link href="style.css" rel="stylesheet">
+</head>
+<body>
+	<p id="poem"></p>
+	<script>
+		let poem = document.getElementById("poem");
+		let req = new XMLHttpRequest();
+		req.open("GET", "/poem", false);
+		req.send();
+		for (let i = 0; i != req.responseText.length; i++)
+			if (req.responseText[i] == "\n")
+				poem.innerHTML += "<br>";
+			else
+				poem.innerHTML += req.responseText[i];
+	</script>
+</body>
+</html>

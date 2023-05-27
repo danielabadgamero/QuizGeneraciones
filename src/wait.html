@@ -5,7 +5,16 @@
     <link rel="stylesheet" href="style.css">
     <title>Espera</title>
     <script>
-
+        function isReady() {
+            let req = new XMLHttpRequest();
+            req.open("GET", "/ready", false);
+            req.send();
+            while (!req.readyState);
+            if (req.responseText == "true") {
+                window.location.href = "/poem.html";
+            }
+        }
+        let interval = setInterval(isReady, 5000);
     </script>
 </head>
 <body>
